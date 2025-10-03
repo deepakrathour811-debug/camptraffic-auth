@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CampTraffic Auth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="gradient-bg text-white min-h-screen">
+    <!-- Header -->
+    <header class="header-gradient backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="logo-icon"></div>
+                    <h1 class="text-xl font-bold text-white">CampTraffic Auth</h1>
+                </div>
+                <button id="sidebarToggle" class="md:hidden p-2 text-white hover:text-gray-300">
+                    ☰
+                </button>
+                <div class="flex items-center space-x-4">
+                    <input type="text" placeholder="Search..." class="header-search px-3 py-2 bg-gray-700 text-white placeholder-gray-400 rounded-lg text-sm w-64 border border-gray-600">
+                    <button id="walletBtn" class="relative p-2 text-gray-300 hover:text-white">
+                        <span class="sr-only">Wallet</span>
+                        <!-- Wallet icon placeholder -->
+                        💰
+                        <span id="walletBalance" class="ml-1 text-sm">$0.00</span>
+                    </button>
+                    <button class="relative p-2 text-gray-300 hover:text-white">
+                        <span class="sr-only">Notifications</span>
+                        <!-- Bell icon placeholder -->
+                        🔔
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">3</span>
+                    </button>
+                    <div class="profile-dropdown">
+                        <button class="flex items-center space-x-2 p-2 text-gray-300 hover:text-white" id="profileBtn">
+                            <span id="userName" class="text-gray-300">Loading...</span>
+                            <!-- Avatar placeholder -->
+                            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white">U</div>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Settings</a>
+                            <button id="signoutBtn" class="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Sign out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex flex-1 main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar w-64 flex-shrink-0">
+            <nav class="mt-6 px-4">
+                <ul class="space-y-2">
+                    <li><a href="dashboard.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md bg-gray-700"><span class="mr-3">📊</span> Dashboard</a></li>
+                    <li><a href="campaigns.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📈</span> Campaigns</a></li>
+                    <li><a href="statistics.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📊</span> Statistics</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">💳</span> Billing</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">⚙️</span> Settings</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">❓</span> Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-bg flex-1 p-6 overflow-y-auto">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-3xl font-bold text-gray-900 mb-6">Welcome back, <span id="welcomeName">User</span>!</h1>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                <span class="text-2xl">💰</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Wallet Balance</p>
+                                <p class="text-2xl font-bold text-gray-900" id="dashboardBalance">$0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100 text-green-600">
+                                <span class="text-2xl">📈</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Active Campaigns</p>
+                                <p class="text-2xl font-bold text-gray-900" id="activeCampaigns">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                                <span class="text-2xl">👥</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Clicks</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalClicks">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="create-campaign.html" class="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                            <span class="text-2xl mr-3">➕</span>
+                            <div>
+                                <p class="font-medium text-gray-900">Create New Campaign</p>
+                                <p class="text-sm text-gray-600">Start advertising your products</p>
+                            </div>
+                        </a>
+                        <a href="campaigns.html" class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                            <span class="text-2xl mr-3">📊</span>
+                            <div>
+                                <p class="font-medium text-gray-900">View Campaigns</p>
+                                <p class="text-sm text-gray-600">Manage your active campaigns</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-4">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2024 CampTraffic Auth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const SERVER_URL = 'http://localhost:3000';
+        let currentUser = null;
+
+        // Elements
+        const userNameEl = document.getElementById('userName');
+        const welcomeNameEl = document.getElementById('welcomeName');
+        const signoutBtn = document.getElementById('signoutBtn');
+        const navLinks = document.querySelectorAll('nav a');
+        const profileBtn = document.getElementById('profileBtn');
+        const walletBtn = document.getElementById('walletBtn');
+        const walletBalanceEl = document.getElementById('walletBalance');
+        const dashboardBalanceEl = document.getElementById('dashboardBalance');
+        const activeCampaignsEl = document.getElementById('activeCampaigns');
+        const totalClicksEl = document.getElementById('totalClicks');
+
+        // Function to render user in profile
+        function renderUser(user) {
+            currentUser = user;
+            if (userNameEl) {
+                userNameEl.textContent = user.name || user.email || 'User';
+            }
+            if (welcomeNameEl) {
+                welcomeNameEl.textContent = user.firstName || user.name || user.email || 'User';
+            }
+            // Update avatar initial if needed
+            const avatar = document.querySelector('.rounded-full');
+            if (avatar && user.firstName) {
+                avatar.textContent = user.firstName.charAt(0).toUpperCase();
+            }
+        }
+
+        // Function to handle auth error (redirect to login)
+        function handleAuthError() {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        }
+
+        // Load wallet balance
+        async function loadWalletBalance() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            const headers = {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            };
+
+            try {
+                const res = await fetch(`${SERVER_URL}/api/wallet/balance`, {
+                    method: 'GET',
+                    headers
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (walletBalanceEl) {
+                        walletBalanceEl.textContent = `$${data.balance.toFixed(2)}`;
+                    }
+                    if (dashboardBalanceEl) {
+                        dashboardBalanceEl.textContent = `$${data.balance.toFixed(2)}`;
+                    }
+                } else {
+                    console.error('Wallet balance fetch failed:', res.status);
+                }
+            } catch (err) {
+                console.error('Network error loading wallet:', err);
+            }
+        }
+
+        // Load dashboard stats
+        async function loadDashboardStats() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            const headers = {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            };
+
+            try {
+                // Load campaigns
+                const campaignsRes = await fetch(`${SERVER_URL}/api/campaigns`, {
+                    method: 'GET',
+                    headers
+                });
+
+                if (campaignsRes.ok) {
+                    const campaignsData = await campaignsRes.json();
+                    const activeCount = campaignsData.campaigns.filter(c => c.status === 'active').length;
+                    if (activeCampaignsEl) {
+                        activeCampaignsEl.textContent = activeCount;
+                    }
+                } else {
+                    console.error('Campaigns fetch failed:', campaignsRes.status);
+                }
+
+                // For total clicks, since no endpoint, set to 0 or calculate if possible
+                // For now, set to 0
+                if (totalClicksEl) {
+                    totalClicksEl.textContent = '0';
+                }
+            } catch (err) {
+                console.error('Network error loading stats:', err);
+            }
+        }
+
+        // Top up wallet
+        async function topUpWallet(amount) {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            const headers = {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            };
+
+            try {
+                const res = await fetch(`${SERVER_URL}/api/wallet/topup`, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ amount })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    alert(`Wallet topped up successfully! New balance: $${data.balance.toFixed(2)}`);
+                    loadWalletBalance(); // Refresh balance
+                } else {
+                    const error = await res.json();
+                    alert(`Top-up failed: ${error.message}`);
+                }
+            } catch (err) {
+                console.error('Network error topping up:', err);
+                alert('Network error during top-up.');
+            }
+        }
+
+        // Load dashboard data
+        async function loadDashboard() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                handleAuthError();
+                return;
+            }
+
+            const headers = {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            };
+
+            try {
+                const res = await fetch(`${SERVER_URL}/dashboard`, {
+                    method: 'GET',
+                    headers
+                });
+
+                if (res.status === 401 || res.status === 403) {
+                    handleAuthError();
+                    return;
+                }
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.user) {
+                        renderUser(data.user);
+                        loadWalletBalance(); // Load wallet after user data
+                        loadDashboardStats(); // Load stats after wallet
+                    } else {
+                        console.error('No user data received');
+                        handleAuthError();
+                    }
+                } else {
+                    console.error('Dashboard fetch failed:', res.status);
+                    handleAuthError();
+                }
+            } catch (err) {
+                console.error('Network error:', err);
+                handleAuthError();
+            }
+        }
+
+        // Logo click handler - redirect to homepage
+        const logoContainers = document.querySelectorAll('.flex.items-center.space-x-3');
+        logoContainers.forEach(logo => {
+            logo.style.cursor = 'pointer';
+            logo.addEventListener('click', () => {
+                document.body.classList.add('page-transition');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 300);
+            });
+        });
+
+        // Nav click handlers
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                if (href && href !== '#') {
+                    // Add fade out before redirect
+                    document.body.classList.add('page-transition');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 300);
+                } else {
+                    console.log(`Nav clicked: ${link.textContent.trim()}`);
+                }
+            });
+        });
+
+        // Sign out handler
+        if (signoutBtn) {
+            signoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('token');
+                document.body.classList.add('page-transition');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 300);
+            });
+        }
+
+        // Profile button (toggle dropdown if needed, but hover for now)
+        if (profileBtn) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Optional: Toggle dropdown class for visibility
+                const dropdown = document.querySelector('.dropdown-menu');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+
+        // Close dropdown on outside click
+        document.addEventListener('click', (e) => {
+            if (!profileBtn.contains(e.target)) {
+                const dropdown = document.querySelector('.dropdown-menu');
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Wallet button handler
+        if (walletBtn) {
+            walletBtn.addEventListener('click', () => {
+                const amount = prompt('Enter amount to top up:');
+                if (amount && !isNaN(amount) && parseFloat(amount) > 0) {
+                    topUpWallet(parseFloat(amount));
+                } else if (amount !== null) {
+                    alert('Please enter a valid positive amount.');
+                }
+            });
+        }
+
+        // Sidebar toggle for mobile
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('sidebar-open');
+                sidebarOverlay.classList.toggle('show');
+            });
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('sidebar-open');
+                sidebarOverlay.classList.remove('show');
+            });
+        }
+
+        // Load on start
+        loadDashboard();
+    </script>
+</body>
+</html>

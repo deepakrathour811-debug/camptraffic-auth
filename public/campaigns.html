@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns - CampTraffic Auth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="gradient-bg text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-slate-800 backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="logo-icon"></div>
+                    <h1 class="text-xl font-bold text-white">CampTraffic Auth</h1>
+                </div>
+                <button id="sidebarToggle" class="md:hidden p-2 text-white hover:text-gray-300">
+                    ☰
+                </button>
+                <div class="flex items-center space-x-4">
+                    <input type="text" placeholder="Search..." class="px-3 py-2 bg-gray-700 text-white placeholder-gray-400 rounded-lg text-sm w-64 border border-gray-600">
+                    <button class="relative p-2 text-gray-300 hover:text-white">
+                        <span class="sr-only">Notifications</span>
+                        <!-- Bell icon placeholder -->
+                        🔔
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">3</span>
+                    </button>
+                    <div class="profile-dropdown">
+                        <button class="flex items-center space-x-2 p-2 text-gray-300 hover:text-white" id="profileBtn">
+                            <span id="userName" class="text-gray-300">Loading...</span>
+                            <!-- Avatar placeholder -->
+                            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white">U</div>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Settings</a>
+                            <button id="signoutBtn" class="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Sign out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex flex-1 main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar w-64 flex-shrink-0">
+            <nav class="mt-6 px-4">
+                <ul class="space-y-2">
+                    <li><a href="dashboard.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📊</span> Dashboard</a></li>
+                    <li><a href="campaigns.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md bg-gray-700"><span class="mr-3">📈</span> Campaigns</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📉</span> Analytics</a></li>
+                    <li><a href="statistics.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📊</span> Statistics</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">💳</span> Billing</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">⚙️</span> Settings</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">❓</span> Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-bg flex-1 p-6 overflow-y-auto">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Campaigns</h2>
+                
+                <!-- Top Bar -->
+                <div class="bg-white p-4 rounded-lg mb-4 flex flex-wrap items-center justify-between shadow-sm">
+                    <div class="flex items-center space-x-4">
+                        <a href="create-campaign.html" class="btn-create text-white font-bold py-2 px-4 rounded-lg">+ Create</a>
+                    </div>
+                    <input type="text" placeholder="Search campaigns..." class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-64">
+                </div>
+
+                <!-- Filters Bar -->
+                <div class="bg-white p-4 rounded-lg mb-4 flex flex-wrap items-center space-x-4 shadow-sm">
+                    <select class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>All Status</option>
+                        <option>Active</option>
+                        <option>Paused</option>
+                        <option>Completed</option>
+                    </select>
+                    <input type="text" placeholder="Name" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-32">
+                    <select class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>All Categories</option>
+                        <option>Text</option>
+                        <option>Banner</option>
+                        <option>Push</option>
+                    </select>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Filter</button>
+                </div>
+
+                <!-- Campaigns Grid -->
+                <div id="campaignsList" class="card-grid bg-white rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="text-center py-8 text-gray-500">No campaigns yet. <a href="create-campaign.html" class="text-blue-500 hover:underline">Create one!</a></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-4">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2024 CampTraffic Auth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const SERVER_URL = 'http://localhost:3000';
+        let currentUser = null;
+
+        // Elements
+        const userNameEl = document.getElementById('userName');
+        const signoutBtn = document.getElementById('signoutBtn');
+        const navLinks = document.querySelectorAll('nav a');
+        const profileBtn = document.getElementById('profileBtn');
+
+        // Function to render user in profile
+        function renderUser(user) {
+            currentUser = user;
+            if (userNameEl) {
+                userNameEl.textContent = user.name || user.email || 'User';
+            }
+            // Update avatar initial if needed
+            const avatar = document.querySelector('.rounded-full');
+            if (avatar && user.name) {
+                avatar.textContent = user.name.charAt(0).toUpperCase();
+            }
+        }
+
+        // Function to handle auth error (redirect to login)
+        function handleAuthError() {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        }
+
+        // Load user data
+        async function loadUser() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                handleAuthError();
+                return;
+            }
+
+            const headers = {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            };
+
+            try {
+                const res = await fetch(`${SERVER_URL}/dashboard`, {
+                    method: 'GET',
+                    headers
+                });
+
+                if (res.status === 401 || res.status === 403) {
+                    handleAuthError();
+                    return;
+                }
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.user) {
+                        renderUser(data.user);
+                        loadCampaigns();
+                    } else {
+                        console.error('No user data received');
+                        handleAuthError();
+                    }
+                } else {
+                    console.error('User fetch failed:', res.status);
+                    handleAuthError();
+                }
+            } catch (err) {
+                console.error('Network error:', err);
+                handleAuthError();
+            }
+        }
+
+        // Load campaigns
+        async function loadCampaigns() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                document.getElementById('campaignsList').innerHTML = '<div class="col-span-full text-center py-8 text-gray-500">Please login to view campaigns.</div>';
+                return;
+            }
+
+            try {
+                const res = await fetch(`${SERVER_URL}/api/campaigns`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (res.status === 401 || res.status === 403) {
+                    handleAuthError();
+                    return;
+                }
+
+                if (res.ok) {
+                    const data = await res.json();
+                    const campaignsList = document.getElementById('campaignsList');
+                    if (data.campaigns && data.campaigns.length > 0) {
+                        campaignsList.innerHTML = data.campaigns.map(campaign => {
+                            let imageHtml = '';
+                            if (campaign.type === 'banner' && campaign.imageUrl) {
+                                imageHtml = `<img src="${campaign.imageUrl}" alt="Banner Image" class="w-full h-32 object-cover rounded-md mb-4">`;
+                            }
+                            let cpcRateHtml = '';
+                            if (campaign.cpcRate) {
+                                cpcRateHtml = `<p>CPC Rate: $${campaign.cpcRate}</p>`;
+                            }
+                            return `
+                                <div class="ad-card p-4 border rounded-lg cursor-pointer hover:shadow-lg transition-shadow" onclick="logClick('${campaign._id}')">
+                                    ${imageHtml}
+                                    <h3 class="text-lg font-semibold mb-2">${campaign.adTitle}</h3>
+                                    <p class="text-gray-600 mb-4">${campaign.adDescription}</p>
+                                    <div class="text-sm text-gray-500">
+                                        <p>Budget: $${campaign.budgetAmount} (${campaign.budgetType})</p>
+                                        ${cpcRateHtml}
+                                        <p>Targeting: ${campaign.targeting}</p>
+                                        <p>Status: ${campaign.status}</p>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                    } else {
+                        campaignsList.innerHTML = '<div class="text-center py-8 text-gray-500 col-span-full">No campaigns yet. <a href="create-campaign.html" class="text-blue-500 hover:underline">Create one!</a></div>';
+                    }
+                } else {
+                    console.error('Failed to load campaigns:', res.status);
+                    document.getElementById('campaignsList').innerHTML = '<div class="text-center py-8 text-red-500">Error loading campaigns. Please try again.</div>';
+                }
+            } catch (err) {
+                console.error('Network error loading campaigns:', err);
+                document.getElementById('campaignsList').innerHTML = '<div class="text-center py-8 text-red-500">Network error. Please check your connection.</div>';
+            }
+        }
+
+        // Log ad click
+        async function logClick(campaignId) {
+            try {
+                const res = await fetch(`${SERVER_URL}/api/ad-click`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ campaignId })
+                });
+
+                if (res.ok) {
+                    console.log('Ad click logged successfully');
+                    // Optional: Show a subtle notification or redirect
+                } else {
+                    console.error('Failed to log click:', res.status);
+                }
+            } catch (err) {
+                console.error('Network error logging click:', err);
+            }
+        }
+
+        // Logo click handler - redirect to homepage
+        const logoContainers = document.querySelectorAll('.flex.items-center.space-x-3');
+        logoContainers.forEach(logo => {
+            logo.style.cursor = 'pointer';
+            logo.addEventListener('click', () => {
+                document.body.classList.add('page-transition');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 300);
+            });
+        });
+
+        // Nav click handlers
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                if (href && href !== '#') {
+                    // Add fade out before redirect
+                    document.body.classList.add('page-transition');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 300);
+                } else {
+                    console.log(`Nav clicked: ${link.textContent.trim()}`);
+                }
+            });
+        });
+
+        // Sign out handler
+        if (signoutBtn) {
+            signoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('token');
+                document.body.classList.add('page-transition');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 300);
+            });
+        }
+
+        // Profile button (toggle dropdown if needed, but hover for now)
+        if (profileBtn) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Optional: Toggle dropdown class for visibility
+                const dropdown = document.querySelector('.dropdown-menu');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+
+        // Close dropdown on outside click
+        document.addEventListener('click', (e) => {
+            if (!profileBtn.contains(e.target)) {
+                const dropdown = document.querySelector('.dropdown-menu');
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Sidebar toggle for mobile
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('sidebar-open');
+                sidebarOverlay.classList.toggle('show');
+            });
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('sidebar-open');
+                sidebarOverlay.classList.remove('show');
+            });
+        }
+
+        // Load on start
+        loadUser();
+    </script>
+</body>
+</html>

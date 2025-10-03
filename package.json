@@ -1,0 +1,19 @@
+{
+  "name": "camptraffic-auth-backend",
+  "version": "1.0.0",
+  "description": "Backend server for CampTrafficAds login and signup.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.3",
+    "multer": "^2.0.2",
+    "nodemailer": "^6.9.7"
+  }
+}

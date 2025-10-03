@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampTrafficAds - Smart User Acquisition & Global Ad Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .logo-icon::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .logo-icon::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #3b82f6;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+        .section-bg {
+            background: rgba(15, 23, 42, 0.8);
+        }
+    </style>
+</head>
+<body class="gradient-bg text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-900/50 backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="logo-icon"></div>
+                    <span class="text-xl font-bold text-white">CampTrafficAds</span>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-300 hover:text-white transition-colors duration-200">Features</a>
+                    <a href="#formats" class="text-gray-300 hover:text-white transition-colors duration-200">Ad Formats</a>
+                    <a href="#platform" class="text-gray-300 hover:text-white transition-colors duration-200">Platform</a>
+                    <a href="advertiser.html" class="text-gray-300 hover:text-white transition-colors duration-200">Advertisers</a>
+                    <a href="#support" class="text-gray-300 hover:text-white transition-colors duration-200">Support</a>
+                    <a href="login.html" class="text-gray-300 hover:text-white transition-colors duration-200">Login</a>
+                </nav>
+
+                <!-- Auth Buttons -->
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="btn-primary text-white px-6 py-2 rounded-full font-medium transition-all duration-300">
+                        LOGIN
+                    </a>
+                    <a href="register.html" class="border border-gray-600 text-white px-6 py-2 rounded-full font-medium hover:bg-gray-800 transition-all duration-300">
+                        REGISTER
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-8">
+                <h1 class="text-5xl lg:text-7xl font-bold leading-tight">
+                    <span class="text-white">Smart User Acquisition</span><br>
+                    <span class="text-blue-400">Multisource Advertising Platform</span>
+                </h1>
+
+                <p class="text-xl text-blue-200 font-medium max-w-3xl mx-auto">
+                    Unlock the power of our Global Ad Network with high-converting ad formats designed for maximum performance and reach.
+                </p>
+
+                <div class="pt-8">
+                    <a href="register.html" class="btn-primary inline-block text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300">
+                        Start Your Campaign Today
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section-bg py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Why Choose CampTrafficAds?</h2>
+                <p class="text-xl text-gray-300">Experience the future of advertising with our comprehensive platform features</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card">
+                    <div class="text-blue-400 mb-4">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-3">Smart User Acquisition</h3>
+                    <p class="text-gray-300">Leverage AI-powered algorithms to acquire high-quality users who are most likely to convert, ensuring optimal ROI for your campaigns.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="text-blue-400 mb-4">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-3">Global Ad Network</h3>
+                    <p class="text-gray-300">Access a worldwide network of publishers and advertisers, delivering your ads to audiences across multiple geographies and demographics.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="text-blue-400 mb-4">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-3">Data-Driven Ad Analytics</h3>
+                    <p class="text-gray-300">Gain deep insights into campaign performance with comprehensive analytics, tracking conversions, clicks, and user behavior in real-time.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="text-blue-400 mb-4">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-3">Brand-Safe Advertising</h3>
+                    <p class="text-gray-300">Ensure your brand appears in safe, reputable environments with our advanced content filtering and quality control measures.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="text-blue-400 mb-4">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-3">Global Audience Reach</h3>
+                    <p class="text-gray-300">Connect with audiences worldwide through our extensive network, supporting both mobile and desktop advertising across all major platforms.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="text-blue-400 mb-4">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-3">24/7 Customer Support</h3>
+                    <p class="text-gray-300">Get round-the-clock assistance from our dedicated support team, ensuring your campaigns run smoothly at all times.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ad Formats Section -->
+    <section id="formats" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">High-Converting Ad Formats</h2>
+                <p class="text-xl text-gray-300">Choose from our diverse range of ad formats designed to maximize engagement and conversions</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="feature-card text-center">
+                    <div class="text-yellow-400 mb-4 mx-auto w-16 h-16 bg-yellow-400/20 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Popunder Ads</h3>
+                    <p class="text-gray-300">Non-intrusive ads that appear in new browser tabs, delivering high visibility without disrupting user experience.</p>
+                </div>
+
+                <div class="feature-card text-center">
+                    <div class="text-green-400 mb-4 mx-auto w-16 h-16 bg-green-400/20 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.868 12.683A17.925 17.925 0 0112 21c7.962 0 12-1.21 12-2.683m-12 2.683a17.925 17.925 0 01-7.132-8.317M12 21V9m0 0l-4 4m4-4l4 4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Push Notifications</h3>
+                    <p class="text-gray-300">Engage users directly on their devices with timely, personalized push notifications that drive immediate action.</p>
+                </div>
+
+                <div class="feature-card text-center">
+                    <div class="text-purple-400 mb-4 mx-auto w-16 h-16 bg-purple-400/20 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">In-Page Push Ads</h3>
+                    <p class="text-gray-300">Seamlessly integrated ads that appear within webpage content, providing high engagement without navigation disruption.</p>
+                </div>
+
+                <div class="feature-card text-center">
+                    <div class="text-blue-400 mb-4 mx-auto w-16 h-16 bg-blue-400/20 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">Telegram Mini Apps Ads</h3>
+                    <p class="text-gray-300">Innovative ads integrated within Telegram's ecosystem, reaching users through popular mini applications and bots.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Section -->
+    <section id="platform" class="section-bg py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Advanced Platform Features</h2>
+                <p class="text-xl text-gray-300">Harness the power of cutting-edge technology for superior campaign performance</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="feature-card">
+                    <h3 class="text-2xl font-semibold text-white mb-4">Targeting & Optimization</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>Advanced Targeting Options:</strong> Precise demographic, behavioral, and contextual targeting for optimal audience reach.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>CPA Offers Optimization:</strong> Automated optimization of cost-per-action offers to maximize profitability.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>Performance Marketing Tools:</strong> Comprehensive suite of tools for tracking, analyzing, and optimizing campaign performance.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3 class="text-2xl font-semibold text-white mb-4">Technology & Management</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>Anti-Fraud Ad Technology:</strong> Advanced fraud detection and prevention systems to ensure ad spend quality.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>Real-Time Bidding (RTB) Integration:</strong> Seamless integration with RTB systems for dynamic, real-time ad auctions.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>Automated Campaign Management:</strong> AI-driven automation for campaign setup, monitoring, and optimization.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>Affiliate Marketing Platform:</strong> Complete affiliate program management with tracking, reporting, and commission automation.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">Ready to Transform Your Advertising?</h2>
+            <p class="text-xl text-gray-300 mb-8">Join thousands of advertisers who trust CampTrafficAds for their marketing success.</p>
+            <a href="register.html" class="btn-primary inline-block text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300">
+                Get Started Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-3 mb-4">
+                    <div class="logo-icon"></div>
+                    <span class="text-xl font-bold text-white">CampTrafficAds</span>
+                </div>
+                <p class="text-gray-400">&copy; 2024 CampTrafficAds. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Logo click handler - redirect to homepage
+        const logoContainers = document.querySelectorAll('.flex.items-center.space-x-3');
+        logoContainers.forEach(logo => {
+            logo.style.cursor = 'pointer';
+            logo.addEventListener('click', () => {
+                document.body.classList.add('page-transition');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 300);
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

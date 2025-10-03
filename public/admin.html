@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - CampTraffic Auth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="gradient-bg text-white min-h-screen">
+    <!-- Header -->
+    <header class="header-gradient backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="logo-icon"></div>
+                    <h1 class="text-xl font-bold text-white">CampTraffic Auth - Admin</h1>
+                </div>
+                <button id="sidebarToggle" class="md:hidden p-2 text-white hover:text-gray-300">
+                    ☰
+                </button>
+                <div class="flex items-center space-x-4">
+                    <input type="text" placeholder="Search..." class="header-search px-3 py-2 bg-gray-700 text-white placeholder-gray-400 rounded-lg text-sm w-64 border border-gray-600">
+                    <div class="profile-dropdown">
+                        <button class="flex items-center space-x-2 p-2 text-gray-300 hover:text-white" id="profileBtn">
+                            <span id="userName" class="text-gray-300">Loading...</span>
+                            <!-- Avatar placeholder -->
+                            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white">A</div>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Settings</a>
+                            <button id="signoutBtn" class="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Sign out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex flex-1 main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar w-64 flex-shrink-0">
+            <nav class="mt-6 px-4">
+                <ul class="space-y-2">
+                    <li><a href="dashboard.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📊</span> Dashboard</a></li>
+                    <li><a href="campaigns.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📈</span> Campaigns</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📉</span> Analytics</a></li>
+                    <li><a href="statistics.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📊</span> Statistics</a></li>
+                    <li><a href="admin.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md bg-gray-700"><span class="mr-3">⚙️</span> Admin</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">💳</span> Billing</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">❓</span> Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-bg flex-1 p-6 overflow-y-auto">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-3xl font-bold text-gray-900 mb-6">Admin Dashboard</h1>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                <span class="text-2xl">👥</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Users</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalUsers">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100 text-green-600">
+                                <span class="text-2xl">📈</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Campaigns</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalCampaigns">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                                <span class="text-2xl">💰</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Revenue</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalRevenue">$0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-red-100 text-red-600">
+                                <span class="text-2xl">👁️</span>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Clicks</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalClicks">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Table -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Users</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full table-auto">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Wallet</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Joined</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody" class="bg-white divide-y divide-gray-200">
+                                <tr><td colspan="5" class="py-8 text-center text-gray-500">Loading users...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Update User Wallet -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Update User Wallet</h2>
+                    <form class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Select User</label>
+                            <select id="userSelect" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
+                                <option value="">Select User</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">New Balance</label>
+                            <input type="number" id="walletAmount" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0.00" step="0.01" min="0">
+                        </div>
+                        <div class="flex items-end">
+                            <button type="button" id="updateWalletBtn" class="w-full btn-primary text-white px-6 py-3 rounded-md font-medium">Update Wallet</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Campaigns Table -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">All Campaigns</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full table-auto">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">User</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Budget</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Created</th>
+                                </tr>
+                            </thead>
+                            <tbody id="campaignsTableBody" class="bg-white divide-y divide-gray-200">
+                                <tr><td colspan="6" class="py-8 text-center text-gray-500">Loading campaigns...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Update Campaign Status -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Update Campaign Status</h2>
+                    <form class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Select Campaign</label>
+                            <select id="campaignSelect" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
+                                <option value="">Select Campaign</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">New Status</label>
+                            <select id="statusSelect" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
+                                <option value="active">Active</option>
+                                <option value="paused">Paused</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button type="button" id="updateStatusBtn" class="w-full btn-primary text-white px-6 py-3 rounded-md font-medium">Update Status</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Push Statistics Data -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Push Statistics Data</h2>
+                    <form class="grid grid-cols-1 md:grid-cols-6 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Select Campaign</label>
+                            <select id="statsCampaignSelect" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
+                                <option value="">Select Campaign</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                            <input type="date" id="statsDate" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Impressions</label>
+                            <input type="number" id="statsImpressions" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0" min="0">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Clicks</label>
+                            <input type="number" id="statsClicks" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0" min="0">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Conversions</label>
+                            <input type="number" id="statsConversions" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0" min="0">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Spend ($)</label>
+                            <input type="number" id="statsSpend" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0.00" step="0.01" min="0">
+                        </div>
+                        <div class="md:col-span-6 flex justify-end">
+                            <button type="button" id="pushStatsBtn" class="btn-primary text-white px-6 py-3 rounded-md font-medium">Push Statistics</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-4">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2024 CampTraffic Auth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const SERVER_URL = 'http://localhost:3000';
+        let currentUser = null;
+
+        // Check if admin token exists
+        if (!localStorage.getItem('adminToken')) {
+            window.location.href = 'admin-login.html';
+        }
+
+        // Elements
+        const userNameEl = document.getElementById('userName');
+        const signoutBtn = document.getElementById('signoutBtn');
+        const profileBtn = document.getElementById('profileBtn');
+        const navLinks = document.querySelectorAll('nav a');
+        const totalUsersEl = document.getElementById('totalUsers');
+        const totalCampaignsEl = document.getElementById('totalCampaigns');
+        const totalRevenueEl = document.getElementById('totalRevenue');
+        const totalClicksEl = document.getElementById('totalClicks');
+        const usersTableBody = document.getElementById('usersTableBody');
+        const campaignsTableBody = document.getElementById('campaignsTableBody');
+        const userSelect = document.getElementById('userSelect');
+        const updateWalletBtn = document.getElementById('updateWalletBtn');
+
+        // Function to render user in profile
+        function renderUser(user) {
+            currentUser = user;
+            if (userNameEl) {
+                userNameEl.textContent = user.firstName + ' ' + user.lastName || user.email || 'Admin';
+            }
+        }
+
+        // Function to handle auth error (redirect to admin login)
+        function handleAuthError() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'admin-login.html';
+        }
+
+        // Load admin data
+        async function loadAdminData() {
+            const adminToken = localStorage.getItem('adminToken');
+            if (!adminToken) {
+                handleAuthError();
+                return;
+            }
+
+            const headers = {
+                'Authorization': 'Bearer ' + adminToken,
+                'Content-Type': 'application/json'
+            };
+
+            try {
+                // Load users
+                const usersRes = await fetch(`${SERVER_URL}/api/admin/users`, {
+                    method: 'GET',
+                    headers
+                });
+
+                if (usersRes.ok) {
+                    const usersData = await usersRes.json();
+                    if (totalUsersEl) {
+                        totalUsersEl.textContent = usersData.users.length;
+                    }
+                    renderUsersTable(usersData.users);
+                } else {
+                    console.error('Users fetch failed:', usersRes.status);
+                }
+
+                // Load all campaigns
+                const campaignsRes = await fetch(`${SERVER_URL}/api/admin/campaigns`, {
+                    method: 'GET',
+                    headers
+                });
+
+                if (campaignsRes.ok) {
+                    const campaignsData = await campaignsRes.json();
+                    if (totalCampaignsEl) {
+                        totalCampaignsEl.textContent = campaignsData.campaigns.length;
+                    }
+                    renderCampaignsTable(campaignsData.campaigns);
+                } else {
+                    console.error('Campaigns fetch failed:', campaignsRes.status);
+                }
+
+                // For revenue and clicks, set to 0 for now
+                if (totalRevenueEl) {
+                    totalRevenueEl.textContent = '$0.00';
+                }
+                if (totalClicksEl) {
+                    totalClicksEl.textContent = '0';
+                }
+            } catch (err) {
+                console.error('Network error loading admin data:', err);
+            }
+        }
+
+        // Render users table
+        function renderUsersTable(users) {
+            if (!usersTableBody) return;
+
+            usersTableBody.innerHTML = '';
+
+            if (userSelect) {
+                userSelect.innerHTML = '<option value="">Select User</option>';
+            }
+
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-2 text-sm text-gray-900">${user.firstName} ${user.lastName}</td>
+                    <td class="px-4 py-2 text-sm text-gray-900">${user.email}</td>
+                    <td class="px-4 py-2 text-sm text-gray-900">${user.phone || 'N/A'}</td>
+                    <td class="px-4 py-2 text-sm text-gray-900">$${user.walletBalance.toFixed(2)}</td>
+                    <td class="px-4 py-2 text-sm text-gray-900">${new Date(user.createdAt).toLocaleDateString()}</td>
+                `;
+                usersTableBody.appendChild(row);
+
+                // Populate user select
+                if (userSelect) {
+                    const option = document.createElement('option');
+                    option.value = user._id;
+                    option.textContent = `${user.firstName} ${user.lastName} (${user.email})`;
+                    userSelect.appendChild(option);
+                }
+            });
+        }
+
+        // Render campaigns table
+        function renderCampaignsTable(campaigns) {
+            if (!campaignsTableBody) return;
+
+            campaignsTableBody.innerHTML = '';
+
+            const campaignSelect = document.getElementById('campaignSelect');
+            if (campaignSelect) {
+                campaignSelect.innerHTML = '<option value="">Select Campaign</option>';
+            }
+
+            const statsCampaignSelect = document.getElementById('statsCampaignSelect');
+            if (statsCampaignSelect) {
+                statsCampaignSelect.innerHTML = '<option value="">Select Campaign</option>';
+            }
+
+            campaigns.forEach(campaign => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-2 text-sm text-gray-900">${campaign.name}</td>
+                    <td class="px-4 py-2 text-sm text-gray-900">${campaign.userId.firstName} ${campaign.userId.lastName} (${campaign.userId.email})</td>
+                    <td class="px-4 py-2 text-sm text-gray-900">${campaign.type || 'Text'}</td>
+                    <td class="px-4 py-2 text-sm text-gray-900">${campaign.status || 'active'}</td>
+                    <td class="px-4 py-2 text-sm text-gray-900">$${campaign.budgetAmount || 0}</td>
+                    <td class="px-4 py-2 text-sm text-gray-900">${new Date(campaign.createdAt).toLocaleDateString()}</td>
+                `;
+                campaignsTableBody.appendChild(row);
+
+                // Populate selects
+                if (campaignSelect) {
+                    const option = document.createElement('option');
+                    option.value = campaign._id;
+                    option.textContent = `${campaign.name} (${campaign.userId.firstName} ${campaign.userId.lastName})`;
+                    campaignSelect.appendChild(option);
+                }
+
+                if (statsCampaignSelect) {
+                    const option = document.createElement('option');
+                    option.value = campaign._id;
+                    option.textContent = `${campaign.name} (${campaign.userId.firstName} ${campaign.userId.lastName})`;
+                    statsCampaignSelect.appendChild(option);
+                }
+            });
+        }
+
+        // Load user data
+        async function loadUser() {
+            const adminToken = localStorage.getItem('adminToken');
+            if (!adminToken) {
+                handleAuthError();
+                return;
+            }
+
+            const headers = {
+                'Authorization': 'Bearer ' + adminToken,
+                'Content-Type': 'application/json'
+            };
+
+            try {
+                const res = await fetch(`${SERVER_URL}/dashboard`, {
+                    method: 'GET',
+                    headers
+                });
+
+                if (res.status === 401 || res.status === 403) {
+                    handleAuthError();
+                    return;
+                }
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.user) {
+                        renderUser(data.user);
+                        loadAdminData(); // Load admin data after user
+                    } else {
+                        console.error('No user data received');
+                        handleAuthError();
+                    }
+                } else {
+                    console.error('User fetch failed:', res.status);
+                    handleAuthError();
+                }
+            } catch (err) {
+                console.error('Network error:', err);
+                handleAuthError();
+            }
+        }
+
+        // Logo click handler - redirect to homepage
+        const logoContainers = document.querySelectorAll('.flex.items-center.space-x-3');
+        logoContainers.forEach(logo => {
+            logo.style.cursor = 'pointer';
+            logo.addEventListener('click', () => {
+                document.body.classList.add('page-transition');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 300);
+            });
+        });
+
+        // Nav click handlers
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                if (href && href !== '#') {
+                    // Add fade out before redirect
+                    document.body.classList.add('page-transition');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 300);
+                } else {
+                    console.log(`Nav clicked: ${link.textContent.trim()}`);
+                }
+            });
+        });
+
+        // Sign out handler
+        if (signoutBtn) {
+            signoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('adminToken');
+                document.body.classList.add('page-transition');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 300);
+            });
+        }
+
+        // Profile button (toggle dropdown if needed, but hover for now)
+        if (profileBtn) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Optional: Toggle dropdown class for visibility
+                const dropdown = document.querySelector('.dropdown-menu');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+
+        // Close dropdown on outside click
+        document.addEventListener('click', (e) => {
+            if (!profileBtn.contains(e.target)) {
+                const dropdown = document.querySelector('.dropdown-menu');
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Sidebar toggle for mobile
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('sidebar-open');
+                sidebarOverlay.classList.toggle('show');
+            });
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('sidebar-open');
+                sidebarOverlay.classList.remove('show');
+            });
+        }
+
+        // Update campaign status
+        const updateStatusBtn = document.getElementById('updateStatusBtn');
+        if (updateStatusBtn) {
+            updateStatusBtn.addEventListener('click', async () => {
+                const campaignId = document.getElementById('campaignSelect').value;
+                const status = document.getElementById('statusSelect').value;
+
+                if (!campaignId || !status) {
+                    alert('Please select a campaign and status.');
+                    return;
+                }
+
+                const adminToken = localStorage.getItem('adminToken');
+                if (!adminToken) {
+                    handleAuthError();
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`${SERVER_URL}/api/admin/campaigns/${campaignId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': 'Bearer ' + adminToken,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ status })
+                    });
+
+                    if (res.ok) {
+                        alert('Campaign status updated successfully!');
+                        loadAdminData(); // Refresh data
+                    } else {
+                        const error = await res.json();
+                        alert('Error: ' + error.message);
+                    }
+                } catch (err) {
+                    console.error('Update error:', err);
+                    alert('Network error: ' + err.message);
+                }
+            });
+        }
+
+        // Update user wallet
+        if (updateWalletBtn) {
+            updateWalletBtn.addEventListener('click', async () => {
+                const userId = userSelect.value;
+                const amount = document.getElementById('walletAmount').value;
+
+                if (!userId || amount === '') {
+                    alert('Please select a user and enter an amount.');
+                    return;
+                }
+
+                const adminToken = localStorage.getItem('adminToken');
+                if (!adminToken) {
+                    handleAuthError();
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`${SERVER_URL}/api/admin/users/${userId}/wallet`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': 'Bearer ' + adminToken,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ amount: parseFloat(amount) })
+                    });
+
+                    if (res.ok) {
+                        alert('User wallet updated successfully!');
+                        loadAdminData(); // Refresh data
+                    } else {
+                        const error = await res.json();
+                        alert('Error: ' + error.message);
+                    }
+                } catch (err) {
+                    console.error('Update error:', err);
+                    alert('Network error: ' + err.message);
+                }
+            });
+        }
+
+        // Push statistics
+        const pushStatsBtn = document.getElementById('pushStatsBtn');
+        if (pushStatsBtn) {
+            pushStatsBtn.addEventListener('click', async () => {
+                const campaignId = document.getElementById('statsCampaignSelect').value;
+                const date = document.getElementById('statsDate').value;
+                const impressions = document.getElementById('statsImpressions').value;
+                const clicks = document.getElementById('statsClicks').value;
+                const conversions = document.getElementById('statsConversions').value;
+                const spend = document.getElementById('statsSpend').value;
+
+                if (!campaignId || !date) {
+                    alert('Please select a campaign and date.');
+                    return;
+                }
+
+                const adminToken = localStorage.getItem('adminToken');
+                if (!adminToken) {
+                    handleAuthError();
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`${SERVER_URL}/api/admin/statistics`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + adminToken,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            campaignId,
+                            date,
+                            impressions,
+                            clicks,
+                            conversions,
+                            spend
+                        })
+                    });
+
+                    if (res.ok) {
+                        alert('Statistics pushed successfully!');
+                        // Clear form
+                        document.getElementById('statsDate').value = '';
+                        document.getElementById('statsImpressions').value = '';
+                        document.getElementById('statsClicks').value = '';
+                        document.getElementById('statsConversions').value = '';
+                        document.getElementById('statsSpend').value = '';
+                    } else {
+                        const error = await res.json();
+                        alert('Error: ' + error.message);
+                    }
+                } catch (err) {
+                    console.error('Push stats error:', err);
+                    alert('Network error: ' + err.message);
+                }
+            });
+        }
+
+        // Load on start
+        loadUser();
+    </script>
+</body>
+</html>

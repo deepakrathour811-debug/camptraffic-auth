@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics - CampTraffic Auth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="gradient-bg text-white min-h-screen">
+    <!-- Header -->
+    <header style="background-color: rgb(59 130 246 / 0.5);" class="backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="logo-icon"></div>
+                    <h1 class="text-xl font-bold text-white">CampTraffic Auth</h1>
+                </div>
+                <button id="sidebarToggle" class="md:hidden p-2 text-white hover:text-gray-300">
+                    ☰
+                </button>
+                <div class="flex items-center space-x-4">
+                    <input type="text" placeholder="Search..." class="px-3 py-2 bg-gray-700 text-white placeholder-gray-400 rounded-lg text-sm w-64 border border-gray-600">
+                    <button class="relative p-2 text-gray-300 hover:text-white">
+                        <span class="sr-only">Notifications</span>
+                        <!-- Bell icon placeholder -->
+                        🔔
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">3</span>
+                    </button>
+                    <div class="profile-dropdown">
+                        <button class="flex items-center space-x-2 p-2 text-gray-300 hover:text-white" id="profileBtn">
+                            <span id="userName" class="text-gray-300">Loading...</span>
+                            <!-- Avatar placeholder -->
+                            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white">U</div>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Settings</a>
+                            <button id="signoutBtn" class="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Sign out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex flex-1 main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar w-64 flex-shrink-0">
+            <nav class="mt-6 px-4">
+                <ul class="space-y-2">
+                    <li><a href="dashboard.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📊</span> Dashboard</a></li>
+                    <li><a href="campaigns.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📈</span> Campaigns</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📉</span> Analytics</a></li>
+                    <li><a href="statistics.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md bg-gray-700"><span class="mr-3">📊</span> Statistics</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">💳</span> Billing</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">⚙️</span> Settings</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">❓</span> Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-bg flex-1 p-6 overflow-y-auto">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Statistics</h2>
+
+                <!-- Search/Filter Bar -->
+                <div class="bg-white p-4 rounded-lg mb-4 flex flex-wrap items-center space-x-4 shadow-sm">
+                    <select class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>All Ad Types</option>
+                        <option>Banner</option>
+                        <option>Video</option>
+                        <option>Social</option>
+                    </select>
+                    <select id="campaignSelect" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-48">
+                        <option value="">All Campaigns</option>
+                    </select>
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm text-gray-700">From:</label>
+                        <input type="date" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm text-gray-700">To:</label>
+                        <input type="date" class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Search</button>
+                </div>
+
+                <!-- Statistics Table -->
+                <div class="table-responsive bg-white rounded-lg overflow-hidden shadow-md">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-blue-500 text-white">
+                            <tr>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Date</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Campaign</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Impressions</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Clicks</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Conversions</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Spend</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">CTR</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">CPC</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">CPM</th>
+                                <th class="py-3 px-4 text-left text-xs font-medium uppercase tracking-wider">Report</th>
+                            </tr>
+                        </thead>
+                        <tbody id="statsTableBody" class="bg-white divide-y divide-gray-200">
+                            <tr><td colspan="10" class="py-8 text-center text-gray-500">Loading statistics...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-4">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2024 CampTraffic Auth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const SERVER_URL = 'http://localhost:3000';
+        let currentUser = null;
+
+        // Elements
+        const userNameEl = document.getElementById('userName');
+        const signoutBtn = document.getElementById('signoutBtn');
+        const navLinks = document.querySelectorAll('nav a');
+        const profileBtn = document.getElementById('profileBtn');
+        const campaignSelect = document.getElementById('campaignSelect');
+
+        // Function to render user in profile
+        function renderUser(user) {
+            currentUser = user;
+            if (userNameEl) {
+                userNameEl.textContent = user.name || user.email || 'User';
+            }
+            // Update avatar initial if needed
+            const avatar = document.querySelector('.rounded-full');
+            if (avatar && user.name) {
+                avatar.textContent = user.name.charAt(0).toUpperCase();
+            }
+        }
+
+        // Function to handle auth error (redirect to login)
+        function handleAuthError() {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        }
+
+        // Load campaigns and statistics
+        async function loadCampaignsAndStats() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                document.getElementById('statsTableBody').innerHTML = '<tr><td colspan="10" class="py-8 text-center text-gray-500">Please login to view statistics.</td></tr>';
+                return;
+            }
+
+            try {
+                // Load campaigns
+                const campaignsRes = await fetch(`${SERVER_URL}/api/campaigns`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (campaignsRes.status === 401 || campaignsRes.status === 403) {
+                    handleAuthError();
+                    return;
+                }
+
+                let campaigns = [];
+                if (campaignsRes.ok) {
+                    const data = await campaignsRes.json();
+                    campaigns = data.campaigns || [];
+                    // Populate select
+                    campaignSelect.innerHTML = '<option value="">All Campaigns</option>';
+                    campaigns.forEach(campaign => {
+                        const option = document.createElement('option');
+                        option.value = campaign._id;
+                        option.textContent = campaign.name;
+                        campaignSelect.appendChild(option);
+                    });
+                }
+
+                // Load statistics
+                const statsRes = await fetch(`${SERVER_URL}/api/statistics`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const tbody = document.getElementById('statsTableBody');
+                if (statsRes.ok) {
+                    const statsData = await statsRes.json();
+                    const statistics = statsData.statistics || [];
+                    tbody.innerHTML = '';
+                    if (statistics.length > 0) {
+                        statistics.forEach(stat => {
+                            const date = new Date(stat.date).toISOString().split('T')[0];
+                            const row = `
+                                <tr>
+                                    <td class="py-4 px-4 text-sm text-gray-900">${date}</td>
+                                    <td class="py-4 px-4 text-sm text-gray-900">${stat.campaignId.name}</td>
+                                    <td class="py-4 px-4 text-sm text-gray-900">${stat.impressions.toLocaleString()}</td>
+                                    <td class="py-4 px-4 text-sm text-gray-900">${stat.clicks.toLocaleString()}</td>
+                                    <td class="py-4 px-4 text-sm text-gray-900">${stat.conversions.toLocaleString()}</td>
+                                    <td class="py-4 px-4 text-sm text-gray-900">$${stat.spend.toFixed(2)}</td>
+                                    <td class="py-4 px-4 text-sm text-gray-900">${stat.ctr.toFixed(2)}%</td>
+                                    <td class="py-4 px-4 text-sm text-gray-900">$${stat.cpc.toFixed(2)}</td>
+                                    <td class="py-4 px-4 text-sm text-gray-900">$${stat.cpm.toFixed(2)}</td>
+                                    <td class="py-4 px-4 text-sm"><a href="#" class="text-blue-500 hover:underline">View</a></td>
+                                </tr>
+                            `;
+                            tbody.innerHTML += row;
+                        });
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="10" class="py-8 text-center text-gray-500">No statistics data yet. <a href="admin.html" class="text-blue-500 hover:underline">Admin can push data!</a></td></tr>';
+                    }
+                } else {
+                    console.error('Statistics fetch failed:', statsRes.status);
+                    tbody.innerHTML = '<tr><td colspan="10" class="py-8 text-center text-red-500">Error loading statistics. Please try again.</td></tr>';
+                }
+            } catch (err) {
+                console.error('Network error loading data:', err);
+                document.getElementById('statsTableBody').innerHTML = '<tr><td colspan="10" class="py-8 text-center text-red-500">Network error. Please check your connection.</td></tr>';
+            }
+        }
+
+        // Load dashboard data
+        async function loadDashboard() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                handleAuthError();
+                return;
+            }
+
+            const headers = {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            };
+
+            try {
+                const res = await fetch(`${SERVER_URL}/dashboard`, {
+                    method: 'GET',
+                    headers
+                });
+
+                if (res.status === 401 || res.status === 403) {
+                    handleAuthError();
+                    return;
+                }
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.user) {
+                        renderUser(data.user);
+                        loadCampaignsAndStats();
+                    } else {
+                        console.error('No user data received');
+                        handleAuthError();
+                    }
+                } else {
+                    console.error('Dashboard fetch failed:', res.status);
+                    handleAuthError();
+                }
+            } catch (err) {
+                console.error('Network error:', err);
+                handleAuthError();
+            }
+        }
+
+        // Nav click handlers
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                if (href && href !== '#') {
+                    window.location.href = href;
+                } else {
+                    console.log(`Nav clicked: ${link.textContent.trim()}`);
+                }
+            });
+        });
+
+        // Sign out handler
+        if (signoutBtn) {
+            signoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            });
+        }
+
+        // Profile button (toggle dropdown if needed, but hover for now)
+        if (profileBtn) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Optional: Toggle dropdown class for visibility
+                const dropdown = document.querySelector('.dropdown-menu');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+
+        // Close dropdown on outside click
+        document.addEventListener('click', (e) => {
+            if (!profileBtn.contains(e.target)) {
+                const dropdown = document.querySelector('.dropdown-menu');
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Sidebar toggle for mobile
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('sidebar-open');
+                sidebarOverlay.classList.toggle('show');
+            });
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('sidebar-open');
+                sidebarOverlay.classList.remove('show');
+            });
+        }
+
+        // Load on start
+        loadDashboard();
+    </script>
+</body>
+</html>

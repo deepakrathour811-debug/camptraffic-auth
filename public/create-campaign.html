@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Campaign - CampTraffic Auth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="gradient-bg text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-slate-800 backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="logo-icon"></div>
+                    <h1 class="text-xl font-bold text-white">CampTraffic Auth</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <input type="text" placeholder="Search..." class="px-3 py-2 bg-gray-700 text-white placeholder-gray-400 rounded-lg text-sm w-64 border border-gray-600">
+                    <button class="relative p-2 text-gray-300 hover:text-white">
+                        <span class="sr-only">Notifications</span>
+                        <!-- Bell icon placeholder -->
+                        🔔
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">3</span>
+                    </button>
+                    <div class="profile-dropdown">
+                        <button class="flex items-center space-x-2 p-2 text-gray-300 hover:text-white" id="profileBtn">
+                            <span id="userName" class="text-gray-300">Loading...</span>
+                            <!-- Avatar placeholder -->
+                            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white">U</div>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Settings</a>
+                            <button id="signoutBtn" class="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Sign out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex flex-1 main-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar w-64 flex-shrink-0">
+            <nav class="mt-6 px-4">
+                <ul class="space-y-2">
+                    <li><a href="dashboard.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📊</span> Dashboard</a></li>
+                    <li><a href="campaigns.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md bg-gray-700"><span class="mr-3">📈</span> Campaigns</a></li>
+                    <li><a href="statistics.html" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">📊</span> Statistics</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">💳</span> Billing</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">⚙️</span> Settings</a></li>
+                    <li><a href="#" class="flex items-center px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-md"><span class="mr-3">❓</span> Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-bg flex-1 p-6 overflow-y-auto">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Create Campaign</h2>
+                
+                <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
+                    <p class="text-gray-700 mb-4">Select an ad type to create your campaign.</p>
+                </div>
+
+                <!-- Ad Types Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                    <!-- Text Ads -->
+                    <div class="ad-card text-gray-900">
+                        <div class="ad-placeholder">Text Ads Image</div>
+                        <h3 class="text-lg font-semibold mb-2">Text Ads</h3>
+                        <p class="text-sm text-gray-600 mb-4">Layered text ads for engaging content.</p>
+                        <button id="textAdsBtn" class="btn-primary text-white px-4 py-2 rounded-md w-full" onclick="showTextAdForm()">Select</button>
+                    </div>
+
+                    <!-- Banner Ads -->
+                    <div class="ad-card text-gray-900">
+                        <div class="ad-placeholder">Banner Image</div>
+                        <h3 class="text-lg font-semibold mb-2">Banner</h3>
+                        <p class="text-sm text-gray-600 mb-4">Layered with image for visual impact.</p>
+                        <button id="bannerBtn" class="btn-primary text-white px-4 py-2 rounded-md w-full" onclick="showBannerForm()">Select</button>
+                    </div>
+
+                    <!-- In-Page Push -->
+                    <div class="ad-card text-gray-900">
+                        <div class="ad-placeholder">In-Page Push Image</div>
+                        <h3 class="text-lg font-semibold mb-2">In-Page Push</h3>
+                        <p class="text-sm text-gray-600 mb-4">Small push notifications on page.</p>
+                        <button id="inPagePushBtn" class="btn-primary text-white px-4 py-2 rounded-md w-full" onclick="showInPagePushForm()">Select</button>
+                    </div>
+
+                    <!-- Native Ads -->
+                    <div class="ad-card text-gray-900">
+                        <div class="ad-placeholder">Native Image</div>
+                        <h3 class="text-lg font-semibold mb-2">Native</h3>
+                        <p class="text-sm text-gray-600 mb-4">Native ads blending with content.</p>
+                        <button id="nativeBtn" class="btn-primary text-white px-4 py-2 rounded-md w-full" onclick="showNativeForm()">Select</button>
+                    </div>
+
+                    <!-- Popunder Ads -->
+                    <div class="ad-card text-gray-900">
+                        <div class="ad-placeholder">Popunder Image</div>
+                        <h3 class="text-lg font-semibold mb-2">Popunder</h3>
+                        <p class="text-sm text-gray-600 mb-4">Popunder ads for additional engagement.</p>
+                        <button id="popunderBtn" class="btn-primary text-white px-4 py-2 rounded-md w-full" onclick="showPopunderForm()">Select</button>
+                    </div>
+                </div>
+
+                <!-- Popunder Campaign Form -->
+                <div id="popunderForm" class="hidden bg-white rounded-lg p-6 shadow-sm max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900">Create Popunder Campaign</h3>
+                    <form class="form-grid grid grid-cols-1 md:grid-cols-2 gap-4" enctype="multipart/form-data">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Campaign Name</label>
+                            <input id="popunderCampaignName" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter campaign name" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ad Title</label>
+                            <input id="popunderAdTitle" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter ad title" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ad Description</label>
+                            <textarea id="popunderAdDescription" rows="3" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter ad description" required></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Targeting</label>
+                            <input id="popunderTargeting" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="e.g., age 25-34, location US" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Budget Type</label>
+                            <select id="popunderBudgetType" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" required>
+                                <option value="">Select Budget Type</option>
+                                <option value="CPC">CPC (Cost Per Click)</option>
+                                <option value="CPM">CPM (Cost Per Mille)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Budget Amount ($)</label>
+                            <input id="popunderBudgetAmount" type="number" min="0.01" step="0.01" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0.00" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Popunder Image</label>
+                            <input id="popunderImage" type="file" accept="image/*" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" required>
+                        </div>
+                        <div class="md:col-span-2 flex space-x-4 mt-6">
+                            <button type="button" id="submitPopunderCampaign" class="flex-1 btn-primary text-white px-6 py-3 rounded-md font-medium">Create Campaign</button>
+                            <button type="button" onclick="backToAdTypes()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-md font-medium">Back</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Text Ad Campaign Form -->
+                <div id="textAdForm" class="hidden bg-white rounded-lg p-6 shadow-sm max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900">Create Text Ad Campaign</h3>
+                    <form class="form-grid grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Campaign Name</label>
+                            <input id="textCampaignName" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter campaign name" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ad Title</label>
+                            <input id="textAdTitle" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter ad title" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ad Description</label>
+                            <textarea id="textAdDescription" rows="3" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter ad description" required></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Targeting</label>
+                            <input id="textTargeting" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="e.g., age 25-34, location US" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Budget Type</label>
+                            <select id="textBudgetType" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" required>
+                                <option value="">Select Budget Type</option>
+                                <option value="CPC">CPC (Cost Per Click)</option>
+                                <option value="CPM">CPM (Cost Per Mille)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Budget Amount ($)</label>
+                            <input id="textBudgetAmount" type="number" min="0.01" step="0.01" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0.00" required>
+                        </div>
+                        <div class="md:col-span-2 flex space-x-4 mt-6">
+                            <button type="button" id="submitTextCampaign" class="flex-1 btn-primary text-white px-6 py-3 rounded-md font-medium">Create Campaign</button>
+                            <button type="button" onclick="backToAdTypes()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-md font-medium">Back</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Banner Ad Campaign Form -->
+                <div id="bannerForm" class="hidden bg-white rounded-lg p-6 shadow-sm max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900">Create Banner Ad Campaign</h3>
+                    <form class="form-grid grid grid-cols-1 md:grid-cols-2 gap-4" enctype="multipart/form-data">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Campaign Name</label>
+                            <input id="bannerCampaignName" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter campaign name" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ad Title</label>
+                            <input id="bannerAdTitle" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter ad title" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ad Description</label>
+                            <textarea id="bannerAdDescription" rows="3" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter ad description" required></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Targeting</label>
+                            <input id="bannerTargeting" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="e.g., age 25-34, location US" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Budget Type</label>
+                            <select id="bannerBudgetType" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" required>
+                                <option value="">Select Budget Type</option>
+                                <option value="CPC">CPC (Cost Per Click)</option>
+                                <option value="CPM">CPM (Cost Per Mille)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Budget Amount ($)</label>
+                            <input id="bannerBudgetAmount" type="number" min="0.01" step="0.01" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0.00" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">CPC Rate ($)</label>
+                            <input id="bannerCpcRate" type="number" min="0.01" step="0.01" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0.00">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Banner Image</label>
+                            <input id="bannerImage" type="file" accept="image/*" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <div class="banner-info grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                <div class="banner-option border border-gray-300 rounded-md p-4 text-center bg-gray-50">
+                                    <div class="w-16 h-16 bg-blue-100 border-2 border-dashed border-blue-300 mx-auto mb-2 flex items-center justify-center rounded">
+                                        250x250
+                                    </div>
+                                    <h4 class="font-semibold text-gray-900">Square</h4>
+                                    <p class="text-sm text-gray-600">Max size: 50kb</p>
+                                </div>
+                                <div class="banner-option border border-gray-300 rounded-md p-4 text-center bg-gray-50">
+                                    <div class="w-20 h-12 bg-blue-100 border-2 border-dashed border-blue-300 mx-auto mb-2 flex items-center justify-center rounded">
+                                        300x250
+                                    </div>
+                                    <h4 class="font-semibold text-gray-900">Medium Rectangle</h4>
+                                    <p class="text-sm text-gray-600">Max size: 50kb</p>
+                                </div>
+                                <div class="banner-option border border-gray-300 rounded-md p-4 text-center bg-gray-50">
+                                    <div class="w-32 h-8 bg-blue-100 border-2 border-dashed border-blue-300 mx-auto mb-2 flex items-center justify-center rounded">
+                                        728x90
+                                    </div>
+                                    <h4 class="font-semibold text-gray-900">Main Banner</h4>
+                                    <p class="text-sm text-gray-600">Max size: 100kb</p>
+                                </div>
+                                <div class="banner-option border border-gray-300 rounded-md p-4 text-center bg-gray-50">
+                                    <div class="w-16 h-24 bg-blue-100 border-2 border-dashed border-blue-300 mx-auto mb-2 flex items-center justify-center rounded">
+                                        300x600
+                                    </div>
+                                    <h4 class="font-semibold text-gray-900">Leaderboard</h4>
+                                    <p class="text-sm text-gray-600">Max size: 100kb</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2 text-center italic">Supported formats: jpg, png, gif, webp</p>
+                        </div>
+                        <div class="md:col-span-2 flex space-x-4 mt-6">
+                            <button type="button" id="submitBannerCampaign" class="flex-1 btn-primary text-white px-6 py-3 rounded-md font-medium">Create Campaign</button>
+                            <button type="button" onclick="backToAdTypes()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-md font-medium">Back</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- In-Page Push Campaign Form -->
+                <div id="inPagePushForm" class="hidden bg-white rounded-lg p-6 shadow-sm max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900">Create In-Page Push Campaign</h3>
+                    <form class="form-grid grid grid-cols-1 md:grid-cols-2 gap-4" enctype="multipart/form-data">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Campaign Name</label>
+                            <input id="pushCampaignName" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter campaign name" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Push Title</label>
+                            <input id="pushTitle" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter push title" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Push Message</label>
+                            <textarea id="pushMessage" rows="3" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter push message" required></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Targeting</label>
+                            <input id="pushTargeting" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="e.g., age 25-34, location US" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Budget Type</label>
+                            <select id="pushBudgetType" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" required>
+                                <option value="">Select Budget Type</option>
+                                <option value="CPC">CPC (Cost Per Click)</option>
+                                <option value="CPM">CPM (Cost Per Mille)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Budget Amount ($)</label>
+                            <input id="pushBudgetAmount" type="number" min="0.01" step="0.01" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0.00" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Icon (Optional)</label>
+                            <input id="pushIcon" type="file" accept="image/*" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black">
+                        </div>
+                        <div class="md:col-span-2 flex space-x-4 mt-6">
+                            <button type="button" id="submitInPagePushCampaign" class="flex-1 btn-primary text-white px-6 py-3 rounded-md font-medium">Create Campaign</button>
+                            <button type="button" onclick="backToAdTypes()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-md font-medium">Back</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Native Campaign Form -->
+                <div id="nativeForm" class="hidden bg-white rounded-lg p-6 shadow-sm max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900">Create Native Campaign</h3>
+                    <form class="form-grid grid grid-cols-1 md:grid-cols-2 gap-4" enctype="multipart/form-data">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Campaign Name</label>
+                            <input id="nativeCampaignName" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter campaign name" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ad Title</label>
+                            <input id="nativeAdTitle" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter ad title" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ad Description</label>
+                            <textarea id="nativeAdDescription" rows="3" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="Enter ad description" required></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Targeting</label>
+                            <input id="nativeTargeting" type="text" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="e.g., age 25-34, location US" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Budget Type</label>
+                            <select id="nativeBudgetType" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" required>
+                                <option value="">Select Budget Type</option>
+                                <option value="CPC">CPC (Cost Per Click)</option>
+                                <option value="CPM">CPM (Cost Per Mille)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Budget Amount ($)</label>
+                            <input id="nativeBudgetAmount" type="number" min="0.01" step="0.01" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" placeholder="0.00" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Native Image</label>
+                            <input id="nativeImage" type="file" accept="image/*" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black" required>
+                        </div>
+                        <div class="md:col-span-2 flex space-x-4 mt-6">
+                            <button type="button" id="submitNativeCampaign" class="flex-1 btn-primary text-white px-6 py-3 rounded-md font-medium">Create Campaign</button>
+                            <button type="button" onclick="backToAdTypes()" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-md font-medium">Back</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-4">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2024 CampTraffic Auth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const SERVER_URL = 'http://localhost:3000';
+        let currentUser = null;
+
+        // Elements
+        const userNameEl = document.getElementById('userName');
+        const signoutBtn = document.getElementById('signoutBtn');
+        const navLinks = document.querySelectorAll('nav a');
+        const profileBtn = document.getElementById('profileBtn');
+
+        // Function to render user in profile
+        function renderUser(user) {
+            currentUser = user;
+            if (userNameEl) {
+                userNameEl.textContent = user.name || user.email || 'User';
+            }
+            // Update avatar initial if needed
+            const avatar = document.querySelector('.rounded-full');
+            if (avatar && user.name) {
+                avatar.textContent = user.name.charAt(0).toUpperCase();
+            }
+        }
+
+        // Function to handle auth error (redirect to login)
+        function handleAuthError() {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+        }
+
+        // Load user data
+        async function loadUser() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                handleAuthError();
+                return;
+            }
+
+            const headers = {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            };
+
+            try {
+                const res = await fetch(`${SERVER_URL}/dashboard`, {
+                    method: 'GET',
+                    headers
+                });
+
+                if (res.status === 401 || res.status === 403) {
+                    handleAuthError();
+                    return;
+                }
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.user) {
+                        renderUser(data.user);
+                    } else {
+                        console.error('No user data received');
+                        handleAuthError();
+                    }
+                } else {
+                    console.error('User fetch failed:', res.status);
+                    handleAuthError();
+                }
+            } catch (err) {
+                console.error('Network error:', err);
+                handleAuthError();
+            }
+        }
+
+        // Nav click handlers
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                if (href && href !== '#') {
+                    window.location.href = href;
+                } else {
+                    console.log(`Nav clicked: ${link.textContent.trim()}`);
+                }
+            });
+        });
+
+        // Sign out handler
+        if (signoutBtn) {
+            signoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            });
+        }
+
+        // Profile button (toggle dropdown if needed, but hover for now)
+        if (profileBtn) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Optional: Toggle dropdown class for visibility
+                const dropdown = document.querySelector('.dropdown-menu');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+
+        // Close dropdown on outside click
+        document.addEventListener('click', (e) => {
+            if (!profileBtn.contains(e.target)) {
+                const dropdown = document.querySelector('.dropdown-menu');
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Load on start
+        loadUser();
+
+        // Campaign Form Functions
+        function showTextAdForm() {
+            document.querySelector('.grid').classList.add('hidden');
+            document.getElementById('textAdForm').classList.remove('hidden');
+        }
+
+        function showBannerForm() {
+            document.querySelector('.grid').classList.add('hidden');
+            document.getElementById('bannerForm').classList.remove('hidden');
+        }
+
+        function showInPagePushForm() {
+            document.querySelector('.grid').classList.add('hidden');
+            document.getElementById('inPagePushForm').classList.remove('hidden');
+        }
+
+        function showNativeForm() {
+            document.querySelector('.grid').classList.add('hidden');
+            document.getElementById('nativeForm').classList.remove('hidden');
+        }
+
+        function showPopunderForm() {
+            document.querySelector('.grid').classList.add('hidden');
+            document.getElementById('popunderForm').classList.remove('hidden');
+        }
+
+        function backToAdTypes() {
+            const forms = ['textAdForm', 'bannerForm', 'inPagePushForm', 'nativeForm', 'popunderForm'];
+            forms.forEach(formId => {
+                const formEl = document.getElementById(formId);
+                if (formEl) {
+                    formEl.classList.add('hidden');
+                }
+            });
+            document.querySelector('.grid').classList.remove('hidden');
+        }
+
+        async function submitTextCampaign() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login first.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const formData = {
+                name: document.getElementById('textCampaignName').value.trim(),
+                adTitle: document.getElementById('textAdTitle').value.trim(),
+                adDescription: document.getElementById('textAdDescription').value.trim(),
+                targeting: document.getElementById('textTargeting').value.trim(),
+                budgetType: document.getElementById('textBudgetType').value,
+                budgetAmount: document.getElementById('textBudgetAmount').value
+            };
+
+            if (!formData.name || !formData.adTitle || !formData.adDescription || !formData.targeting || !formData.budgetType || !formData.budgetAmount) {
+                alert('Please fill all fields.');
+                return;
+            }
+
+            if (parseFloat(formData.budgetAmount) <= 0) {
+                alert('Budget amount must be greater than 0.');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${SERVER_URL}/api/campaigns`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert('Campaign created successfully!');
+                    window.location.href = 'campaigns.html';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (err) {
+                console.error('Submit error:', err);
+                alert('Network error: ' + err.message);
+            }
+        }
+
+        async function submitBannerCampaign() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login first.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('bannerCampaignName').value.trim());
+            formData.append('adTitle', document.getElementById('bannerAdTitle').value.trim());
+            formData.append('adDescription', document.getElementById('bannerAdDescription').value.trim());
+            formData.append('targeting', document.getElementById('bannerTargeting').value.trim());
+            formData.append('budgetType', document.getElementById('bannerBudgetType').value);
+            formData.append('budgetAmount', document.getElementById('bannerBudgetAmount').value);
+            const cpcRate = document.getElementById('bannerCpcRate').value.trim();
+            if (cpcRate) {
+                formData.append('cpcRate', cpcRate);
+            }
+            formData.append('bannerImage', document.getElementById('bannerImage').files[0]);
+
+            const name = formData.get('name');
+            const adTitle = formData.get('adTitle');
+            const adDescription = formData.get('adDescription');
+            const targeting = formData.get('targeting');
+            const budgetType = formData.get('budgetType');
+            const budgetAmount = formData.get('budgetAmount');
+
+            if (!name || !adTitle || !adDescription || !targeting || !budgetType || !budgetAmount || !formData.get('bannerImage')) {
+                alert('Please fill all fields, including banner image.');
+                return;
+            }
+
+            if (parseFloat(budgetAmount) <= 0) {
+                alert('Budget amount must be greater than 0.');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${SERVER_URL}/api/campaigns/banner`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert('Banner campaign created successfully!');
+                    window.location.href = 'campaigns.html';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (err) {
+                console.error('Submit error:', err);
+                alert('Network error: ' + err.message);
+            }
+        }
+
+        async function submitInPagePushCampaign() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login first.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('pushCampaignName').value.trim());
+            formData.append('adTitle', document.getElementById('pushTitle').value.trim());
+            formData.append('adDescription', document.getElementById('pushMessage').value.trim());
+            formData.append('targeting', document.getElementById('pushTargeting').value.trim());
+            formData.append('budgetType', document.getElementById('pushBudgetType').value);
+            formData.append('budgetAmount', document.getElementById('pushBudgetAmount').value);
+            const iconFile = document.getElementById('pushIcon').files[0];
+            if (iconFile) {
+                formData.append('icon', iconFile);
+            }
+
+            const name = formData.get('name');
+            const adTitle = formData.get('adTitle');
+            const adDescription = formData.get('adDescription');
+            const targeting = formData.get('targeting');
+            const budgetType = formData.get('budgetType');
+            const budgetAmount = formData.get('budgetAmount');
+
+            if (!name || !adTitle || !adDescription || !targeting || !budgetType || !budgetAmount) {
+                alert('Please fill all required fields.');
+                return;
+            }
+
+            if (parseFloat(budgetAmount) <= 0) {
+                alert('Budget amount must be greater than 0.');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${SERVER_URL}/api/campaigns/in-page-push`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert('In-Page Push campaign created successfully!');
+                    window.location.href = 'campaigns.html';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (err) {
+                console.error('Submit error:', err);
+                alert('Network error: ' + err.message);
+            }
+        }
+
+        async function submitNativeCampaign() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login first.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('nativeCampaignName').value.trim());
+            formData.append('adTitle', document.getElementById('nativeAdTitle').value.trim());
+            formData.append('adDescription', document.getElementById('nativeAdDescription').value.trim());
+            formData.append('targeting', document.getElementById('nativeTargeting').value.trim());
+            formData.append('budgetType', document.getElementById('nativeBudgetType').value);
+            formData.append('budgetAmount', document.getElementById('nativeBudgetAmount').value);
+            formData.append('nativeImage', document.getElementById('nativeImage').files[0]);
+
+            const name = formData.get('name');
+            const adTitle = formData.get('adTitle');
+            const adDescription = formData.get('adDescription');
+            const targeting = formData.get('targeting');
+            const budgetType = formData.get('budgetType');
+            const budgetAmount = formData.get('budgetAmount');
+            const nativeImage = formData.get('nativeImage');
+
+            if (!name || !adTitle || !adDescription || !targeting || !budgetType || !budgetAmount || !nativeImage) {
+                alert('Please fill all fields, including native image.');
+                return;
+            }
+
+            if (parseFloat(budgetAmount) <= 0) {
+                alert('Budget amount must be greater than 0.');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${SERVER_URL}/api/campaigns/native`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert('Native campaign created successfully!');
+                    window.location.href = 'campaigns.html';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (err) {
+                console.error('Submit error:', err);
+                alert('Network error: ' + err.message);
+            }
+        }
+
+        async function submitPopunderCampaign() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login first.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('popunderCampaignName').value.trim());
+            formData.append('adTitle', document.getElementById('popunderAdTitle').value.trim());
+            formData.append('adDescription', document.getElementById('popunderAdDescription').value.trim());
+            formData.append('targeting', document.getElementById('popunderTargeting').value.trim());
+            formData.append('budgetType', document.getElementById('popunderBudgetType').value);
+            formData.append('budgetAmount', document.getElementById('popunderBudgetAmount').value);
+            formData.append('popunderImage', document.getElementById('popunderImage').files[0]);
+
+            const name = formData.get('name');
+            const adTitle = formData.get('adTitle');
+            const adDescription = formData.get('adDescription');
+            const targeting = formData.get('targeting');
+            const budgetType = formData.get('budgetType');
+            const budgetAmount = formData.get('budgetAmount');
+
+            if (!name || !adTitle || !adDescription || !targeting || !budgetType || !budgetAmount || !formData.get('popunderImage')) {
+                alert('Please fill all fields, including popunder image.');
+                return;
+            }
+
+            if (parseFloat(budgetAmount) <= 0) {
+                alert('Budget amount must be greater than 0.');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${SERVER_URL}/api/campaigns/popunder`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert('Popunder campaign created successfully!');
+                    window.location.href = 'campaigns.html';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (err) {
+                console.error('Submit error:', err);
+                alert('Network error: ' + err.message);
+            }
+        }
+
+        // Event listeners
+        if (document.getElementById('textAdsBtn')) {
+            document.getElementById('textAdsBtn').addEventListener('click', showTextAdForm);
+        }
+        if (document.getElementById('submitTextCampaign')) {
+            document.getElementById('submitTextCampaign').addEventListener('click', submitTextCampaign);
+        }
+        if (document.getElementById('bannerBtn')) {
+            document.getElementById('bannerBtn').addEventListener('click', showBannerForm);
+        }
+        if (document.getElementById('submitBannerCampaign')) {
+            document.getElementById('submitBannerCampaign').addEventListener('click', submitBannerCampaign);
+        }
+        if (document.getElementById('inPagePushBtn')) {
+            document.getElementById('inPagePushBtn').addEventListener('click', showInPagePushForm);
+        }
+        if (document.getElementById('submitInPagePushCampaign')) {
+            document.getElementById('submitInPagePushCampaign').addEventListener('click', submitInPagePushCampaign);
+        }
+        if (document.getElementById('nativeBtn')) {
+            document.getElementById('nativeBtn').addEventListener('click', showNativeForm);
+        }
+        if (document.getElementById('submitNativeCampaign')) {
+            document.getElementById('submitNativeCampaign').addEventListener('click', submitNativeCampaign);
+        }
+        if (document.getElementById('popunderBtn')) {
+            document.getElementById('popunderBtn').addEventListener('click', showPopunderForm);
+        }
+        if (document.getElementById('submitPopunderCampaign')) {
+            document.getElementById('submitPopunderCampaign').addEventListener('click', submitPopunderCampaign);
+        }
+    </script>
+</body>
+</html>
