@@ -492,6 +492,8 @@ app.post('/api/campaigns', authMiddleware, async (req, res) => {
 // Protected Create Banner Campaign Route (multipart for image)
 app.post('/api/campaigns/banner', authMiddleware, upload.single('bannerImage'), async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { name, adTitle, adDescription, targeting, budgetType, budgetAmount, cpcRate } = req.body;
         const type = 'banner';
 
@@ -543,6 +545,8 @@ app.post('/api/campaigns/banner', authMiddleware, upload.single('bannerImage'), 
 // Protected Create In-Page Push Campaign Route (multipart for optional icon)
 app.post('/api/campaigns/in-page-push', authMiddleware, upload.single('icon'), async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { name, adTitle, adDescription, targeting, budgetType, budgetAmount } = req.body;
         const type = 'in-page-push';
 
@@ -588,6 +592,8 @@ app.post('/api/campaigns/in-page-push', authMiddleware, upload.single('icon'), a
 // Protected Create Native Campaign Route (multipart for required image)
 app.post('/api/campaigns/native', authMiddleware, upload.single('nativeImage'), async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { name, adTitle, adDescription, targeting, budgetType, budgetAmount } = req.body;
         const type = 'native';
 
@@ -637,6 +643,8 @@ app.post('/api/campaigns/native', authMiddleware, upload.single('nativeImage'), 
 // Protected Create Popunder Campaign Route (multipart for required image)
 app.post('/api/campaigns/popunder', authMiddleware, upload.single('popunderImage'), async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { name, adTitle, adDescription, targeting, budgetType, budgetAmount } = req.body;
         const type = 'popunder';
 
@@ -686,6 +694,8 @@ app.post('/api/campaigns/popunder', authMiddleware, upload.single('popunderImage
 // Protected Get User's Campaigns Route
 app.get('/api/campaigns', authMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         const campaigns = await Campaign.find({ userId: req.user.id }).sort({ createdAt: -1 });
         res.status(200).json({ campaigns });
     } catch (error) {
@@ -697,6 +707,8 @@ app.get('/api/campaigns', authMiddleware, async (req, res) => {
 // Public Log Ad Click Route
 app.post('/api/ad-click', async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { campaignId } = req.body;
 
         if (!campaignId) {
@@ -741,6 +753,8 @@ app.post('/api/ad-click', async (req, res) => {
 // Get all users
 app.get('/api/admin/users', adminAuthMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         const users = await User.find().select('-password').sort({ createdAt: -1 });
         res.status(200).json({ users });
     } catch (error) {
@@ -752,6 +766,8 @@ app.get('/api/admin/users', adminAuthMiddleware, async (req, res) => {
 // Get all campaigns
 app.get('/api/admin/campaigns', adminAuthMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         const campaigns = await Campaign.find().populate('userId', 'firstName lastName email').sort({ createdAt: -1 });
         res.status(200).json({ campaigns });
     } catch (error) {
@@ -763,6 +779,8 @@ app.get('/api/admin/campaigns', adminAuthMiddleware, async (req, res) => {
 // Update campaign status
 app.put('/api/admin/campaigns/:id', adminAuthMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { status } = req.body;
         const campaign = await Campaign.findByIdAndUpdate(req.params.id, { status }, { new: true });
         if (!campaign) {
@@ -778,6 +796,8 @@ app.put('/api/admin/campaigns/:id', adminAuthMiddleware, async (req, res) => {
 // Update user wallet
 app.put('/api/admin/users/:id/wallet', adminAuthMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { amount } = req.body;
         const newBalance = parseFloat(amount);
         if (isNaN(newBalance) || newBalance < 0) {
@@ -797,6 +817,8 @@ app.put('/api/admin/users/:id/wallet', adminAuthMiddleware, async (req, res) => 
 // Insert or update statistics for a campaign
 app.post('/api/admin/statistics', adminAuthMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { campaignId, date, impressions, clicks, conversions, spend } = req.body;
 
         // Validation
@@ -853,6 +875,8 @@ app.post('/api/admin/statistics', adminAuthMiddleware, async (req, res) => {
 // Get statistics for user's campaigns
 app.get('/api/statistics', authMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         // Get user's campaigns first
         const campaigns = await Campaign.find({ userId: req.user.id }).select('_id name');
         const campaignIds = campaigns.map(c => c._id);
