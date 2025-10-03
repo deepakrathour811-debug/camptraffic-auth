@@ -87,10 +87,45 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Explicitly handle preflight requests for all routes
 app.options('*', cors());
 
-// --- MongoDB Connection ---
-mongoose.connect(MONGO_URI)
-    .then(() => console.log('Successfully connected to MongoDB'))
-    .catch(err => console.error('Could not connect to MongoDB:', err));
+// --- MongoDB Connection for Vercel/Serverless ---
+let cached = global.mongoose;
+
+if (!cached) {
+    cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function connectToDatabase() {
+    if (cached.conn) {
+        return cached.conn;
+    }
+
+    if (!cached.promise) {
+        const opts = {
+            bufferCommands: false,
+            maxPoolSize: 10,
+            minPoolSize: 5,
+            maxIdleTimeMS: 30000,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+            family: 4
+        };
+
+        cached.promise = mongoose.connect(MONGO_URI, opts).then((mongoose) => {
+            console.log('Successfully connected to MongoDB');
+            return mongoose;
+        });
+    }
+
+    try {
+        cached.conn = await cached.promise;
+    } catch (e) {
+        cached.promise = null;
+        console.error('Could not connect to MongoDB:', e);
+        throw e;
+    }
+
+    return cached.conn;
+}
 
 // --- User Schema and Model ---
 const userSchema = new mongoose.Schema({
@@ -201,6 +236,8 @@ const upload = multer({
 // Comprehensive Registration Route (OTP-based)
 app.post('/register', async (req, res) => {
     try {
+        await connectToDatabase();
+
         const {
             firstName,
             lastName,
@@ -281,6 +318,8 @@ app.post('/register', async (req, res) => {
 // Verify Registration OTP Route
 app.post('/verify-registration-otp', async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { email, otp } = req.body;
         const stored = registrationStore.get(email.toLowerCase());
         if (!stored || stored.otp !== otp || Date.now() > stored.expires) {
@@ -306,6 +345,8 @@ app.post('/verify-registration-otp', async (req, res) => {
 // Login Route (Direct password verification)
 app.post('/login', async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) {
@@ -328,6 +369,8 @@ app.post('/login', async (req, res) => {
 // Admin Login Route
 app.post('/admin-login', async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) {
@@ -355,6 +398,8 @@ app.post('/admin-login', async (req, res) => {
 // Protected Dashboard Route
 app.get('/dashboard', authMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         const user = await User.findById(req.user.id).select('-password');
         if (!user) {
             return res.status(404).json({ message: "User not found." });
