@@ -413,6 +413,8 @@ app.get('/dashboard', authMiddleware, async (req, res) => {
 // Protected Get Wallet Balance Route
 app.get('/api/wallet/balance', authMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         const user = await User.findById(req.user.id).select('walletBalance');
         if (!user) {
             return res.status(404).json({ message: "User not found." });
@@ -426,6 +428,8 @@ app.get('/api/wallet/balance', authMiddleware, async (req, res) => {
 // Protected Top Up Wallet Route
 app.post('/api/wallet/topup', authMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { amount } = req.body;
         const topupAmount = parseFloat(amount);
         if (isNaN(topupAmount) || topupAmount <= 0) {
@@ -446,6 +450,8 @@ app.post('/api/wallet/topup', authMiddleware, async (req, res) => {
 // Protected Create Campaign Route (for text ads - JSON)
 app.post('/api/campaigns', authMiddleware, async (req, res) => {
     try {
+        await connectToDatabase();
+
         const { name, adTitle, adDescription, targeting, budgetType, budgetAmount } = req.body;
         const type = 'text'; // Default for this endpoint
 
